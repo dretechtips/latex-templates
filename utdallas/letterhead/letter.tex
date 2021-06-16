@@ -1,0 +1,40 @@
+\documentclass{UTD_letterhead}
+\RequirePackage{color,graphicx}
+
+\usepackage[breaklinks=true]{hyperref}
+\usepackage{url}
+\hypersetup{
+  colorlinks = true,
+  urlcolor = black,
+}
+
+% \date{October 30, 2014}
+% rigorous
+\begin{document}
+
+\opening{Dear Reader,}
+
+\textit{Place holder... Cras aliquam rhoncus ipsum, in hendrerit nunc mattis vitae. Duis vitae efficitur metus, ac tempus leo. Cras nec fringilla lacus. Quisque sit amet risus at ipsum pharetra commodo. Sed aliquam mauris at consequat eleifend. Praesent porta, augue sed viverra bibendum, neque ante euismod ante, in vehicula justo lorem ac eros. Suspendisse augue libero, venenatis eget tincidunt ut, malesuada at lorem. Donec vitae bibendum arcu. Aenean maximus nulla non pretium iaculis. Quisque imperdiet, nulla in pulvinar aliquet, velit quam ultrices quam, sit amet fringilla leo sem vel nunc. Mauris in lacinia lacus.}
+
+I created this template for the letter head of the School of Natural Sciences and Mathematics at the University of Texas at Dallas.
+It works fine but can be improved. Departmental information (e.g., \textbf{Department of Mathematical Sciences}) can be modified in the class file. 
+Here is the set of files to be used:
+\begin{description}
+\item[UTD\_letterhead.cls] the class file for UTD Math letter head.
+\item[UTD\_header.jpg] the UTD header.
+\item[sampleSig.png] sample signature image, to be replaced with your signature.
+\end{description}
+
+To generate the pdf file of this letter, use \texttt{pdflatex letter.tex}.
+
+\textit{Place holder... Cras aliquam rhoncus ipsum, in hendrerit nunc mattis vitae. Duis vitae efficitur metus, ac tempus leo. Cras nec fringilla lacus. Quisque sit amet risus at ipsum pharetra commodo. Sed aliquam mauris at consequat eleifend. Praesent porta, augue sed viverra bibendum, neque ante euismod ante, in vehicula justo lorem ac eros. Suspendisse augue libero, venenatis eget tincidunt ut, malesuada at lorem. Donec vitae bibendum arcu. Aenean maximus nulla non pretium iaculis. Quisque imperdiet, nulla in pulvinar aliquet, velit quam ultrices quam, sit amet fringilla leo sem vel nunc. Mauris in lacinia lacus.}
+
+\closing{Sincerely yours,} 
+\vspace{-2.5cm}
+\includegraphics[scale = 0.15]{sampleSig}\\
+\noindent Sy Han (Steven) Chiou \\Assistant Professor of Statistics
+%Email: schiou@d.umn.edu
+
+
+
+\end{document}

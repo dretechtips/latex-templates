@@ -1,0 +1,282 @@
+\documentclass{beamer}
+
+% Some common packages
+\usepackage{graphicx, color}
+\usepackage{alltt}
+\usepackage{booktabs, calc, rotating}
+\usepackage{natbib}
+\usepackage{multicol}
+\usepackage{amsmath, amsbsy, amssymb, amsthm, graphicx}
+\usepackage[english]{babel}
+\usepackage{xkeyval} 
+\usepackage{xfrac}
+\usepackage[normalem]{ulem}
+\usepackage{fancyvrb} 
+\usepackage{tikz, geometry, tkz-graph, xcolor}
+\usepackage[latin1]{inputenc}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage[export]{adjustbox}
+
+
+% Some shortcuts
+\newcommand{\cov}{\mathrm{cov}}
+\newcommand{\dif}{\mathrm{d}}
+\newcommand{\bigbrk}{\vspace*{2in}}
+\newcommand{\smallbrk}{\vspace*{.1in}}
+\newcommand{\midbrk}{\vspace*{1in}}
+\newcommand{\red}[1]{{\color{red}#1}}
+\newcommand{\blue}[1]{{\color{blue}#1}}
+\newcommand{\green}[1]{{\color{green}#1}}
+\newcommand{\calc}[1]{{\fbox{\mbox{#1}}}}
+\newcommand{\Var}{\mathrm{Var}}%
+\newcommand{\Cov}{\mathrm{Cov}}%
+
+\usetheme[numbering=fraction]{metropolis}
+% section page?
+% \usetheme[sectionpage=none]{metropolis}
+% place progressbar under frametitle?
+% \usetheme[progressbar = frametitle]{metropolis}
+
+% Add logo?
+% This force a progress bar
+\makeatletter
+\setlength{\metropolis@frametitle@padding}{1.8ex}% <- default 2.2 ex
+\setbeamertemplate{frametitle}{
+    \nointerlineskip
+    \begin{beamercolorbox}[
+        wd=\paperwidth,
+        sep=0pt,
+        leftskip=\metropolis@frametitle@padding,
+        rightskip=\metropolis@frametitle@padding,
+        ]{frametitle}
+        \metropolis@frametitlestrut@start
+        \insertframetitle
+        \nolinebreak
+        \metropolis@frametitlestrut@end
+        \hfill
+        \includegraphics[height=3ex, keepaspectratio, valign=c]{UTDmono_circle_flame.png}
+    \end{beamercolorbox}
+    \usebeamertemplate*{progress bar in head/foot}
+}
+
+% To center title?
+\setbeamertemplate{title page}[default]
+% To add a rectangle box for title?
+% \setbeamercolor{titlelike}{parent = frametitle}   
+
+% item color and shape
+% \setbeamertemplate{itemize item}{\color{mDarkTeal}$\bullet$}
+% \setbeamertemplate{itemize subitem}{\color{mDarkTeal}$\bullet$}
+% \setbeamertemplate{itemize subsubitem}{\color{mDarkTeal}$\bullet$}
+
+% UTD colors
+\definecolor{warmgray10}{RGB}{118,106,98}
+\definecolor{warmgray2}{RGB}{213,210,202}
+\definecolor{warmgray1}{RGB}{230,230,230}
+\definecolor{flameOrange}{RGB}{199,91,18}
+\definecolor{ecoGreen}{RGB}{0,133,86}
+
+% only change item color 
+\setbeamercolor*{itemize item}{fg = mDarkTeal}
+\setbeamercolor*{itemize subitem}{fg = mDarkTeal}
+\setbeamercolor*{itemize subsubitem}{fg = mDarkTeal}
+% enumerate color
+\setbeamercolor*{enumerate item}{fg = mDarkTeal}
+\setbeamercolor*{enumerate subitem}{fg = mDarkTeal}
+\setbeamercolor*{enumerate subsubitem}{fg = mDarkTeal}
+% description color
+\setbeamercolor*{description item}{fg = mDarkTeal}
+\setbeamercolor*{description subitem}{fg = mDarkTeal}
+\setbeamercolor*{description subsubitem}{fg = mDarkTeal}
+
+% define blocks
+\newenvironment<>{problock}[1]{
+  \begin{actionenv}#2
+    \def\insertblocktitle{#1}
+    \par
+    \mode<presentation>{
+      \setbeamercolor{block title}{fg = white, bg = ecoGreen} %mDarkTeal}
+      \setbeamercolor{block body}{fg = black, bg = warmgray1}
+    }
+    \usebeamertemplate{block begin}}
+  {\par\usebeamertemplate{block end}\end{actionenv}}
+
+\newenvironment<>{defblock}[1]{
+  \begin{actionenv}#2
+    \def\insertblocktitle{#1}
+    \par
+    \mode<presentation>{
+      \setbeamercolor{block title}{fg = white,bg = flameOrange} %mDarkBrown}
+      \setbeamercolor{block body}{fg = black,bg = warmgray1}
+    }
+    \usebeamertemplate{block begin}}
+  {\par\usebeamertemplate{block end}\end{actionenv}}
+
+% \setbeamerfont{block title}{size={}}
+% \setbeamercolor{titlelike}{parent=structure,bg=flameOrange!80!black,fg=white} % title
+\mode
+<all>
+
+% fancy for Verbatim?
+\fvset{frame = single, framesep = 1mm,fontfamily = courier,
+  fontsize = \scriptsize, numbers = left, framerule = .3mm,
+  numbersep = 1mm,commandchars = \\\{\}}
+
+% reset text width
+\setbeamersize{text margin left = 5pt,text margin right = 5pt}
+
+\title[Short title]{Long title\\ Secondary title \\ 
+  \small{Additional notes}}
+\author[Author name]{Author name}
+% \institute[UTD]{Department of Mathematical Sciences \\ The University of Texas at Dallas}
+\date{}
+% UTD logo on title page
+% \titlegraphic{\includegraphics[width=5cm]{mono_nsm_print_header.jpg}}
+\titlegraphic{\includegraphics[scale = .27]{UTDmono_NSM_header_RGB-1.png}}
+
+\begin{document}
+
+% default title thicker line
+% need to adjust
+% \frame{
+% \maketitle
+% \begin{tikzpicture}[remember picture, overlay]
+%   \def\xmargin{.1cm}     % Left and right margin of the title line
+%   \def\yshift{-0.1cm}   % Moves the title line upwards (-1.25cm moves title line downwards)
+%   \draw[mLightBrown,line width=2pt] (current page.west) ++(\xmargin,\yshift) -- ++({\paperwidth-2*\xmargin},0);
+% \end{tikzpicture}
+% }
+
+
+\let\otp\titlepage
+\renewcommand{\titlepage}{\otp\addtocounter{framenumber}{-1}}
+
+\frame[plain]{
+  \vspace{1cm}
+  \maketitle
+  \begin{tikzpicture}[remember picture, overlay]
+    \def\xmargin{.8cm}     % Left and right margin of the title line
+    \def\yshift{0.6cm}   % Moves the title line upwards 
+    \draw[mLightBrown,line width=2.2pt] (current page.west) ++(\xmargin,\yshift) -- ++({\paperwidth-2*\xmargin},0);
+  \end{tikzpicture}
+}
+
+
+% Set up UTD backgroud
+% Show background from here on
+\setbeamercolor*{item}{fg=red}
+\bgroup
+\usebackgroundtemplate{
+  \tikz[overlay,remember picture] \node[opacity=0.05, at=(current page.center)] {
+    \includegraphics[height=\paperheight,width=\paperwidth]{UTDbg}};}
+
+
+\begin{frame}{Table of contents}
+  \setbeamertemplate{section in toc}[sections numbered]
+  \tableofcontents[hideallsubsections]
+\end{frame}
+
+\section{Introduction}
+\begin{frame}{metropolis theme}
+  \begin{itemize}
+  \item I created this template for presentation slides under the (unofficial) theme of the \alert{UTD}.
+  \item This template uses the metropolis theme \url{https://github.com/matze/mtheme}.
+  \item To install do, 
+    \begin{enumerate}
+    \item `git clone git@github.com:matze/mtheme.git'
+    \item `make sty' inside of the folder
+    \item Remove the folder mtheme
+    \end{enumerate}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Required files}
+  \begin{itemize}
+  \item Here is the set of files to be used: 
+    \begin{description}
+    \item[slide.tex] main file for text
+    \item[slide.bib] bib file for citations
+    \item[UTDbg.jpg] background image 
+    \item[mono\_nsm\_print\_header.jpg] title logo
+    \end{description}
+  \item Compile \textbf{slide.tex} twice to generate the pdf file of this slide
+  \end{itemize}
+\end{frame}
+
+
+\section{Blocks}
+\begin{frame}{Blocks}
+  \begin{problock}{Exercise block}
+    Some exercise
+  \end{problock}
+  \begin{defblock}{Definition block}
+    Some definition
+  \end{defblock}
+\end{frame}
+
+\section{Adding extras}
+\begin{frame}[fragile]
+  \frametitle{Adding codes}
+  \begin{itemize}
+  \item Print codes with \texttt{Verbatim}. 
+    \begin{Verbatim}
+> print("Hello world")
+[1] "Hello world"
+    \end{Verbatim}
+  \item This works fine, but can be improved by migrating to \texttt{knitr} or \texttt{Rmarkdown}.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Table}
+  \begin{itemize}
+  \item A good online \LaTeX table generator \url{https://www.tablesgenerator.com/}
+  \end{itemize}
+  \begin{table}[h]
+    \caption{April 2019}
+    \begin{tabular}{rrrrrrr}
+      \toprule
+      Sun & Mon & Tue & Wed & Thu & Fri & Sat \\
+      \midrule
+          & 1 & 2 & 3 & 4 & 5 & 6 \\
+      7 & 8 & 9 & 10 & 11 & 12 & 13\\
+      14 & 15 & 16 & 17 & 18 & 19 & 20 \\
+      21 & 22 & 23 & 24 & 25 & 26 & 27 \\
+      28 & 29 & 30 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+\end{frame}
+
+\begin{frame}{Equation}
+  \begin{itemize}
+  \item A good online \LaTeX equation generator \url{https://www.codecogs.com/latex/eqneditor.php}
+    \begin{equation*}
+      \int_{-\infty}^\infty\frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(x - \mu)^2}{2\sigma^2}}=1
+    \end{equation*}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{bib}
+  \begin{itemize}
+  \item If a bib file is presence, be sure to run bibtex and pdflatex twice.
+    \begin{description}
+    \item[\citet{chiou2017rank}] proposed methods for length-biased data
+    \item[\citet{chiou2018semiparametric}] proposed methods for panel count data
+    \item[\citet{xu2020generalized}] proposed methods for recurrent event data
+    \end{description}
+  \item Citation can be mentioned passively.
+  \item \textit{aftgee} is a useful R package for fitting survival data \citep{chiou2014fitting}.
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[allowframebreaks]%[shrink = 5]
+  \begin{center}
+    \scriptsize
+    \bibliographystyle{abbrvnat}
+    \bibliography{slides}
+  \end{center}
+\end{frame}
+
+\end{document}
